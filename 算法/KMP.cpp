@@ -33,7 +33,7 @@ int SqString::KMPIndex(SqString s)
 	int i = 0, j = 0;
 	int next[100];
 	GetNext(s, next);
-	while (i < length && j < s.length)
+	while (i < length && j < s.length)                      //注意这里是&&
 	{
 		if (data[i] == s.data[j] || j == -1)          
 		{
