@@ -91,20 +91,20 @@ int main()
 		{
 			if (IsEmpty(Stack) == 0)
 			{
-				if (GetTop(Stack) == '[')
-				{
-					pop(Stack);
-				}
-				else if (GetTop(Stack) == '(')
+				if (GetTop(Stack) == '(')
 				{
 					printf("缺少%c括号", ')');
 					pop(Stack);
 					flag = 0;
-				}
-				else if (GetTop(Stack) == '{')
+				if (GetTop(Stack) == '{')
 				{
 					printf("缺少%c括号", '[');
 					flag = 0;
+				}
+				}
+				if (GetTop(Stack) == '[')                              //按( ,{ ,[  顺序依次判断
+				{
+					pop(Stack);
 				}
 			}
 			else if (IsEmpty(Stack) == 1)
@@ -117,21 +117,21 @@ int main()
 		{
 			if (IsEmpty(Stack) == 0)
 			{
-				if (GetTop(Stack) == '{')
-				{
-					pop(Stack);
-				}
-				else if (GetTop(Stack) == '(')
+				if (GetTop(Stack) == '(')
 				{
 					printf("缺少%c括号", ')');
 					pop(Stack);
 					flag = 0;
 				}
-				else if (GetTop(Stack) == '[')
+				if (GetTop(Stack) == '[')
 				{
 					printf("缺少%c括号", ']');
 					pop(Stack);
 					flag = 0;
+				}
+				if (GetTop(Stack) == '{')                   //按( ,[ ,{  顺序依次判断
+				{
+					pop(Stack);
 				}
 			}
 			else if(IsEmpty(Stack)==1)
@@ -161,3 +161,5 @@ int main()
 	DeleteStack(Stack);
 	return 0;
 }
+
+//本程序只适用于括号按逻辑顺序正确排序的字符串，如{[()]},{[(),{)}等，而不适用于({}),({},(()),(({等，且外层最多同时存在三层不同类型的括号
