@@ -20,7 +20,20 @@ int CountNode(BTNode* b)
 }
 
 
-//输出一棵二叉树二点 
+//求叶子结点个数
+int LeafNodeNum(BtNdoe* b)       
+{
+	if (b == NULL)
+		return(0);
+	else if (b->lchild == NULL && b->rchild == NULL)
+		return(1);
+	else
+		return(LeafNodeNum(b->lchild) + LeafNodeNum(b->rchild));
+}
+
+
+
+//输出一棵二叉树的叶子结点 
 void DispLeaf(BTNode* b)
 {
 	if (b != NULL)
