@@ -16,9 +16,9 @@ void CreateBTNode(HTNode ht[], int n0)                    //n0为叶子结点的
 	int lnode, rnode;                                  
 	double min1, min2;                                  
 	int i, j;                                           
-	for (i = 0; i < 2 * n0 - 2; i++)                    
+	for (i = 0; i <= 2 * n0 - 2; i++)                    
 		ht[i].lchild = ht[i].rchild = ht[i].parent = -1;  //所有结点的相关域初值置为-1
-	for (i = n0; i < 2 * n0 - 2; i++)                     //构造n0-1个分支结点
+	for (i = n0; i <= 2 * n0 - 2; i++)                     //构造n0-1个分支结点
 	{
 		min1 = min2 = MaxWeight;                          //min1和min2扫描并记录最小的两个权值，初值置为MaxWeight
 		lnode = rnode = -1;							      //lnode和rnode扫描并记录权值最小两个结点的位置
@@ -77,6 +77,8 @@ void CreateCode(HTNode ht[], HTCode num[], int n0)
 				hc.code[hc.start] = '1';          //编码输入'1'
 				hc.start--;
 			}
+			c = f;                            //易错点，这里要将原父亲结点设置为孩子结点，继续向上递推
+			f = ht[f].parent;                 //更新新的父亲结点
 		}
 		hc.start++;                               //start+1，此时start指向哈夫曼编码最开始的字符
 		num[i] = hc;                              //将哈夫曼编码存储到编码数组中
