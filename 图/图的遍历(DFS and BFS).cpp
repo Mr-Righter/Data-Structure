@@ -3,38 +3,21 @@
 #include "SqQueue.h"
 #define MAXV 50
 #define INF 32767
-typedef char Info;
-typedef struct ArcNode            //±ß½áµã
-{
-	int adjvex;                   //¸Ã±ßµÄÁÙ½Óµã±àºÅ
-	struct ArcNode* nextarc;      //Ö¸ÏòÏÂÒ»Ìõ±ß½çµã
-	int weight;                   //È¨Öµ
-}ArcNode;
-typedef struct VNode            //¶¥µã½áµã     
-{
-	Info info;                    //¶¥µãµÄÆäËûÐÅÏ¢
-	ArcNode* firstarc;            //Ö¸ÏòµÚÒ»¸ö±ß½Óµã
-}VNode;
-typedef struct AdjGraph
-{
-	int n, e;                     //Í¼ÖÐ¶¥µãÊýnºÍ¶¥µãÊýe
-	VNode adjlist[MAXV];        //ÁÚ½Ó±íµÄÍ·½áµãÊý×é
-}AdjGraph;
 
 
-//Éî¶ÈÓÅÏÈ±éÀú Depth First Search£¨DFS£©
+//æ·±åº¦ä¼˜å…ˆéåŽ† Depth First Searchï¼ˆDFSï¼‰
 int visited[MAXV] = {0};
-void DFS(AdjGraph* G, int v)             //vÊÇ³õÊ¼µãv
+void DFS(AdjGraph* G, int v)             //væ˜¯åˆå§‹ç‚¹v
 {                          
 	ArcNode* p;
-	visited[v] = 1;                      //ÖÃÒÑ·ÃÎÊ±ê¼Ç
+	visited[v] = 1;                      //ç½®å·²è®¿é—®æ ‡è®°
 	printf("%d", v);
-	p = G->adjlist[v].firstarc;          //pÖ¸Ïò¶¥µãvµÄµÚÒ»¸öÁÚ½Óµã
+	p = G->adjlist[v].firstarc;          //pæŒ‡å‘é¡¶ç‚¹vçš„ç¬¬ä¸€ä¸ªé‚»æŽ¥ç‚¹
 	while (p != NULL)                    
 	{
-		if (visited[p->adjvex] == 0)     //Èôp->adjvex¶¥µãÎ´±»·ÃÎÊ£¬µÝ¹é·ÃÎÊËü
+		if (visited[p->adjvex] == 0)     //è‹¥p->adjvexé¡¶ç‚¹æœªè¢«è®¿é—®ï¼Œé€’å½’è®¿é—®å®ƒ
 			DFS(G, p->adjvex);
-		p = p->nextarc;                  //pÖ¸ÏòvµÄÏÂÒ»¸öÁÚ½Óµã
+		p = p->nextarc;                  //pæŒ‡å‘vçš„ä¸‹ä¸€ä¸ªé‚»æŽ¥ç‚¹
 	}
 }
 
@@ -43,30 +26,30 @@ void BFS(AdjGraph* G, int v)
 {
 	int w;
 	ArcNode* p;
-	SqQueue* queue;                           //¶¨Òå»·ÐÎ¶ÓÁÐÖ¸Õë
-	InitQueue(queue);                         //³õÊ¼»¯¶ÓÁÐ
-	int visited[MAXV] = { 0 };                //·ÃÎÊ±ê¼ÇÊý×é³õÊ¼»¯
+	SqQueue* queue;                           //å®šä¹‰çŽ¯å½¢é˜Ÿåˆ—æŒ‡é’ˆ
+	InitQueue(queue);                         //åˆå§‹åŒ–é˜Ÿåˆ—
+	int visited[MAXV] = { 0 };                //è®¿é—®æ ‡è®°æ•°ç»„åˆå§‹åŒ–
 	printf("%d", v);
-	visited[v] = 1;                           //ÖÃÒÑ·ÃÎÊÊý×é
-	enQueue(queue, v);                        //½«³õÊ¼µãÈë¶Ó
-	while (!EmptyQueue(queue))                //¶Ó²»¿ÕÑ­»·
+	visited[v] = 1;                           //ç½®å·²è®¿é—®æ•°ç»„
+	enQueue(queue, v);                        //å°†åˆå§‹ç‚¹å…¥é˜Ÿ
+	while (!EmptyQueue(queue))                //é˜Ÿä¸ç©ºå¾ªçŽ¯
 	{
-		deQueue(queue, w);                    //³ö¶ÓÒ»¸ö¶¥µã
-		p = G->adjlist[w].firstarc;           //pÊÇwµÄµÚÒ»¸öÁÚ½Óµã
-		while (p != NULL)                     //²éÕÒwµÄËùÓÐÁÚ½Óµã
+		deQueue(queue, w);                    //å‡ºé˜Ÿä¸€ä¸ªé¡¶ç‚¹
+		p = G->adjlist[w].firstarc;           //pæ˜¯wçš„ç¬¬ä¸€ä¸ªé‚»æŽ¥ç‚¹
+		while (p != NULL)                     //æŸ¥æ‰¾wçš„æ‰€æœ‰é‚»æŽ¥ç‚¹
 		{
-			if (visited[p->adjvex] == 0)      //Èôµ±Ç°ÁÚ½ÓµãÎ´±»·ÃÎÊ
+			if (visited[p->adjvex] == 0)      //è‹¥å½“å‰é‚»æŽ¥ç‚¹æœªè¢«è®¿é—®
 			{
 				printf("%d", p->adjvex);
 				visited[p->adjvex] = 1;
-				enQueue(queue, p->adjvex);    //½«¸Ã¶¥µã½ø¶Ó
+				enQueue(queue, p->adjvex);    //å°†è¯¥é¡¶ç‚¹è¿›é˜Ÿ
 			}
-			p = p->nextarc;                   //ÕÒÏÂÒ»¸öÁÚ½Óµã
+			p = p->nextarc;                   //æ‰¾ä¸‹ä¸€ä¸ªé‚»æŽ¥ç‚¹
 		}
 	}
 }
 
 
-//DFSºÍBFSÔÚ±éÀú¹ý³ÌÖÐ·ÃÎÊÒ»¸ö½áµãÊ±Ê×ÏÈÒª¶ÔÆävisutedÖµ½øÐÐÅÐ¶Ï
+//DFSå’ŒBFSåœ¨éåŽ†è¿‡ç¨‹ä¸­è®¿é—®ä¸€ä¸ªç»“ç‚¹æ—¶é¦–å…ˆè¦å¯¹å…¶visutedå€¼è¿›è¡Œåˆ¤æ–­
 
 
